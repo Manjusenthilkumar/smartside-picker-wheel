@@ -1,94 +1,290 @@
 body {
   background-color: #f3f3f3;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f1 100%);
 }
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Keep title at the top */
+  justify-content: flex-start;
   min-height: 100vh;
   padding: 20px;
 }
 
 .title {
-  color: #ffbb12;
-  font-size: 2rem;
+  color: #191a23;
+  font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #FFD700, #FFA500);
+  margin: 10px auto;
+  border-radius: 2px;
 }
 
 /* Align the wheel and questions side by side */
 .content {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  gap: 50px; /* Space between wheel and question box */
-  width: 80%;
+  gap: 50px;
+  width: 90%;
+  max-width: 1200px;
   margin-top: 20px;
 }
 
 .wheel-container {
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px; /* Space for the button */
+  padding-top: 70px;
+  transition: transform 0.3s ease;
 }
 
-/* Move the spin button above the wheel */
+.wheel-container:hover {
+  transform: translateY(-5px);
+}
+
+/* Spin button styling */
 .spin-button {
   position: absolute;
-  top: 10px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  top: 15px;
+  padding: 12px 35px;
+  font-size: 1.1rem;
+  font-weight: bold;
   color: white;
-  background-color: #191a23;
+  background: linear-gradient(135deg, #191a23 0%, #414253 100%);
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 .spin-button:hover {
-  background-color: #0f1017;
+  background: linear-gradient(135deg, #0f1017 0%, #282936 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Always show the question box */
+.spin-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Question box styling */
 .question-box {
   background-color: white;
   color: #191a23;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: left;
-  width: 800px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
   min-height: 470px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
-.timer {
-  color: red;
-  font-weight: bold;
+.question-box:hover {
+  transform: translateY(-5px);
 }
 
-.answer {
-  color: green;
-  font-weight: bold;
-}
-
-.default-message {
-  color: gray;
-  font-size: 1.1rem;
+/* Domain banner styling */
+.domain-banner {
+  padding: 12px 20px;
+  color: white;
   text-align: center;
+}
+
+.domain-banner h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Question content styling */
+.question-content {
+  padding: 30px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.question-text {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+/* Timer styling */
+.timer-container {
+  margin-top: auto;
+}
+
+.timer-bar {
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.timer-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #FF6B6B, #FF8E53);
+  border-radius: 5px;
+  transition: width 1s linear;
+}
+
+.timer-text {
+  color: #FF6B6B;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: right;
+  margin: 0;
+}
+
+/* Answer styling */
+.answer-container {
+  margin-top: auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 5px solid #4BC0C0;
+}
+
+.answer-container h3 {
+  color: #4BC0C0;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.answer-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Welcome content styling */
+.welcome-content {
+  padding: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.welcome-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.welcome-header h2 {
+  color: #191a23;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
+}
+
+.welcome-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 3px;
+  background: linear-gradient(90deg, #FFD700, #FFA500);
+  border-radius: 2px;
+}
+
+.loading-text {
+  color: #888;
   font-style: italic;
+}
+
+.instructions {
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 5px solid #36A2EB;
+}
+
+.instructions h3 {
+  color: #36A2EB;
+  margin-top: 0;
+}
+
+.instructions ol {
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.categories-preview {
+  margin-top: auto;
+}
+
+.categories-preview h3 {
+  margin-bottom: 15px;
+}
+
+.category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-chip {
+  padding: 8px 15px;
+  border-radius: 20px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.category-chip:hover {
+  transform: scale(1.05);
+  cursor: default;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .wheel-container, .question-box {
+    width: 100%;
+  }
 }

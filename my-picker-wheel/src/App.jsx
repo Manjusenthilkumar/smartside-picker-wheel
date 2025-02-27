@@ -20,6 +20,7 @@ const App = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const timerRef = useRef(null);
+  const [hasSpun, setHasSpun] = useState(false);
 
   const handleSpinClick = () => {
     const newPrizeNumber = Math.floor(Math.random() * domains.length);
@@ -28,6 +29,7 @@ const App = () => {
     setSelectedDomain(null);
     setQuestion(null);
     setShowAnswer(false);
+    setHasSpun(true);
   };
 
   const handleStop = () => {
@@ -50,38 +52,108 @@ const App = () => {
     }, 1000);
   };
 
+  // Get domain color
+  const getDomainColor = (domain) => {
+    const colorMap = {
+      "Python": "#306998",
+      "AI/ML": "#FF6384",
+      "Web Development": "#36A2EB",
+      "Databases": "#4BC0C0",
+      "Fun Facts": "#FFCE56",
+      "Cybersecurity": "#9966FF"
+    };
+    return colorMap[domain] || "#36A2EB";
+  };
+
   return (
     <div className="container">
-      <h1 className="title">Spin the Wheel</h1>
+      <h1 className="title">Tech Trivia Wheel</h1>
       
       <div className="content">
         {/* Spinner */}
         <div className="wheel-container">
-          <button className="spin-button" onClick={handleSpinClick}>Spin</button>
+          <button className="spin-button" onClick={handleSpinClick}>
+            {mustSpin ? "Spinning..." : "Spin"}
+          </button>
           <Wheel
             mustStartSpinning={mustSpin}
             prizeNumber={prizeNumber}
             data={domains}
             onStopSpinning={handleStop}
-            backgroundColors={["#ff6384", "#36a2eb", "#ffce56", "#4bc0c0"]}
+            backgroundColors={domains.map(domain => getDomainColor(domain.option))}
             textColors={["#ffffff"]}
+            fontSize={14}
+            outerBorderColor="#191a23"
+            outerBorderWidth={3}
+            innerRadius={40}
+            innerBorderColor="#191a23"
+            innerBorderWidth={2}
           />
         </div>
 
-        {/* Always display question box */}
+        {/* Question box with enhanced styling */}
         <div className="question-box">
           {selectedDomain && question ? (
             <>
-              <h2>Category: {selectedDomain}</h2>
-              <p>{question.question}</p>
-              {!showAnswer ? (
-                <p className="timer">Time Left: {timeLeft}s</p>
-              ) : (
-                <p className="answer">Answer: {question.answer}</p>
-              )}
+              <div 
+                className="domain-banner" 
+                style={{ backgroundColor: getDomainColor(selectedDomain) }}
+              >
+                <h2>{selectedDomain}</h2>
+              </div>
+              
+              <div className="question-content">
+                <p className="question-text">{question.question}</p>
+                
+                {!showAnswer ? (
+                  <div className="timer-container">
+                    <div className="timer-bar">
+                      <div 
+                        className="timer-progress" 
+                        style={{ width: `${(timeLeft/30) * 100}%` }}
+                      ></div>
+                    </div>
+                    <p className="timer-text">{timeLeft}s</p>
+                  </div>
+                ) : (
+                  <div className="answer-container">
+                    <h3>Answer:</h3>
+                    <p className="answer-text">{question.answer}</p>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
-            <p className="default-message">Spin the wheel to get a question!</p>
+            <div className="welcome-content">
+              <div className="welcome-header">
+                <h2>Welcome to Tech Trivia!</h2>
+                {hasSpun && <p className="loading-text">Loading your question...</p>}
+              </div>
+              
+              <div className="instructions">
+                <h3>How to play:</h3>
+                <ol>
+                  <li>Spin the wheel to select a random tech category</li>
+                  <li>Answer the question within 30 seconds</li>
+                  <li>The answer will be revealed when time runs out</li>
+                </ol>
+              </div>
+              
+              <div className="categories-preview">
+                <h3>Categories:</h3>
+                <div className="category-chips">
+                  {domains.map((domain, index) => (
+                    <span 
+                      key={index} 
+                      className="category-chip"
+                      style={{ backgroundColor: getDomainColor(domain.option) }}
+                    >
+                      {domain.option}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>
