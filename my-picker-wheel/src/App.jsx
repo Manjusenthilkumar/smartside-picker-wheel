@@ -72,23 +72,25 @@ const App = () => {
       <div className="content">
         {/* Spinner */}
         <div className="wheel-container">
-          <button className="spin-button" onClick={handleSpinClick}>
-            {mustSpin ? "Spinning..." : "Spin"}
-          </button>
-          <Wheel
-            mustStartSpinning={mustSpin}
-            prizeNumber={prizeNumber}
-            data={domains}
-            onStopSpinning={handleStop}
-            backgroundColors={domains.map(domain => getDomainColor(domain.option))}
-            textColors={["#ffffff"]}
-            fontSize={14}
-            outerBorderColor="#191a23"
-            outerBorderWidth={3}
-            innerRadius={40}
-            innerBorderColor="#191a23"
-            innerBorderWidth={2}
-          />
+          <div className="wheel-wrapper">
+            <Wheel
+              mustStartSpinning={mustSpin}
+              prizeNumber={prizeNumber}
+              data={domains}
+              onStopSpinning={handleStop}
+              backgroundColors={domains.map(domain => getDomainColor(domain.option))}
+              textColors={["#ffffff"]}
+              fontSize={14}
+              outerBorderColor="#191a23"
+              outerBorderWidth={3}
+              innerRadius={40}
+              innerBorderColor="#191a23"
+              innerBorderWidth={2}
+            />
+            <button className="spin-button" onClick={handleSpinClick}>
+              {mustSpin ? "Spinning..." : "Spin"}
+            </button>
+          </div>
         </div>
 
         {/* Question box with enhanced styling */}
